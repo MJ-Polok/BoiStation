@@ -115,11 +115,13 @@ const BuySell = () => {
                                 ))}
                             </div>
 
-                            <div className="mt-12 flex justify-center">
-                                <div className="rounded-full border border-[#D6CCBA] bg-white px-5 py-3 text-sm font-bold text-[#4F5865] shadow-[0_8px_24px_rgba(17,24,39,0.06)]">
-                                    {isLoading ? 'Loading books...' : 'Loading more books...'}
+                            {isLoading && (
+                                <div className="mt-12 flex justify-center">
+                                    <div className="rounded-full border border-[#D6CCBA] bg-white px-5 py-3 text-sm font-bold text-[#4F5865] shadow-[0_8px_24px_rgba(17,24,39,0.06)]">
+                                        Loading books...
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </>
                     ) : (
                         <motion.div
@@ -151,3 +153,4 @@ const BuySell = () => {
 };
 
 export default BuySell;
+
