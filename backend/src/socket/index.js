@@ -2,13 +2,10 @@ import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
 import { Conversation } from "../models/Conversation.js";
 import { User } from "../models/User.js";
+import { getAllowedOrigins } from "../config/cors.js";
 
 export function initSocket(httpServer) {
-  const allowedOrigins = [
-    process.env.CLIENT_URL || "http://localhost:5173",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-  ];
+  const allowedOrigins = getAllowedOrigins();
   const io = new Server(httpServer, {
     cors: {
       origin: allowedOrigins,
@@ -63,3 +60,6 @@ export function initSocket(httpServer) {
 
   return io;
 }
+
+
+

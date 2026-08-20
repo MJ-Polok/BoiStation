@@ -11,15 +11,12 @@ import orderRoutes from "./routes/order.routes.js";
 import savedRoutes from "./routes/saved.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import { getAllowedOrigins } from "./config/cors.js";
 import { errorHandler, notFound } from "./middleware/error.middleware.js";
 
 export function createApp() {
   const app = express();
-  const allowedOrigins = [
-    process.env.CLIENT_URL || "http://localhost:5173",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-  ];
+  const allowedOrigins = getAllowedOrigins();
 
   app.use(helmet());
   app.use(
@@ -63,3 +60,6 @@ export function createApp() {
 
   return app;
 }
+
+
+
