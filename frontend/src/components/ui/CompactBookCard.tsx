@@ -38,18 +38,18 @@ const CompactBookCard = ({
 
     return (
         <Link
-            className="group block overflow-hidden rounded-lg border border-[#E7DFD0] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(17,24,39,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111827]"
+            className="group block w-full min-w-0 max-w-full overflow-hidden rounded-lg border border-[#E7DFD0] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(17,24,39,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111827]"
             to={to}
         >
-            <div className={`relative bg-[#F7F4EC] ${isCompact ? 'p-3' : 'p-4'}`}>
+            <div className={`relative w-full min-w-0 max-w-full bg-[#F7F4EC] ${isCompact ? 'p-3' : 'p-4'}`}>
                 <div
-                    className={`aspect-[4/5] rounded-md border border-[#E7DFD0] bg-[#FFFDF8] ${
+                    className={`aspect-[4/5] w-full min-w-0 max-w-full rounded-md border border-[#E7DFD0] bg-[#FFFDF8] ${
                         isCompact ? 'p-3' : 'p-4'
                     }`}
                 >
                     {book.posterUrl ? (
                         <img
-                            className="h-full w-full rounded-sm border-2 border-[#111827] object-cover"
+                            className="h-full w-full min-w-0 max-w-full rounded-sm border-2 border-[#111827] object-cover"
                             src={book.posterUrl}
                             alt={`${book.title} book cover`}
                             loading="lazy"
@@ -104,8 +104,8 @@ const CompactBookCard = ({
                 </span>
             </div>
 
-            <div className={`${isCompact ? 'p-4' : 'p-5'} text-left`}>
-                <div className={isCompact ? 'min-h-[64px]' : 'min-h-[76px]'}>
+            <div className={`${isCompact ? 'p-4' : 'p-5'} min-w-0 text-left`}>
+                <div className={`${isCompact ? 'min-h-[64px]' : 'min-h-[76px]'} min-w-0`}>
                     <h3
                         className={`font-sora line-clamp-2 font-bold leading-snug text-[#111827] ${
                             isCompact ? 'text-base' : 'text-lg'
@@ -117,11 +117,11 @@ const CompactBookCard = ({
                 </div>
 
                 <div
-                    className={`flex items-center justify-between gap-3 border-t border-[#E7DFD0] ${
+                    className={`flex min-w-0 items-center justify-between gap-3 border-t border-[#E7DFD0] ${
                         isCompact ? 'mt-3 pt-3' : 'mt-5 pt-4'
                     }`}
                 >
-                    <p className="font-sora text-base font-extrabold text-[#111827]">{book.priceLabel}</p>
+                    <p className="font-sora shrink-0 text-base font-extrabold text-[#111827]">{book.priceLabel}</p>
                     <p className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-[#7A7280]">
                         <MapPin className="shrink-0" size={14} strokeWidth={2.2} />
                         <span className="truncate">{book.location}</span>

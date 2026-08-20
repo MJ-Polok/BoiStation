@@ -469,9 +469,9 @@ const Profile = () => {
                     ) : null}
 
                     {filteredPosts.length > 0 ? (
-                        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="mt-6 grid w-full min-w-0 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             {filteredPosts.map((post) => (
-                                <div className="grid gap-3" key={post.id}>
+                                <div className="grid min-w-0 gap-3" key={post.id}>  
                                     <CompactBookCard
                                         book={mapProfilePostToCompactBook(post)}
                                         size="compact"

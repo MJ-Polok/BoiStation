@@ -102,7 +102,7 @@ const RecentBooksSection = () => {
                 </div>
 
                 {isLoading ? (
-                    <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
+                    <div className="mt-10 grid w-full min-w-0 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <div
                                 className="h-[430px] animate-pulse rounded-lg border border-[#E7DFD0] bg-[#F7F4EC]"
@@ -116,9 +116,9 @@ const RecentBooksSection = () => {
                         <p className="mt-2 text-sm font-semibold text-[#626B78]">{error}</p>
                     </div>
                 ) : books.length ? (
-                    <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
+                    <div className="mt-10 grid w-full min-w-0 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
                         {books.map((book) => (
-                            <motion.div variants={cardVariants} key={book.id}>
+                            <motion.div className="min-w-0" variants={cardVariants} key={book.id}>
                                 <CompactBookCard book={book} to={`/books/${book.id}`} />
                             </motion.div>
                         ))}
