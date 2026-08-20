@@ -119,7 +119,7 @@ const RecentBooksSection = () => {
                     <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-6">
                         {books.map((book) => (
                             <motion.div variants={cardVariants} key={book.id}>
-                                <CompactBookCard book={book} to={`/books/${book.id}`} />
+                                <CompactBookCard book={book} size="recent" to={`/books/${book.id}`} />
                             </motion.div>
                         ))}
                     </div>
@@ -137,3 +137,4 @@ const RecentBooksSection = () => {
 };
 
 export default RecentBooksSection;
+
