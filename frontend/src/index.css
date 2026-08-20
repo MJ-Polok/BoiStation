@@ -5,6 +5,7 @@
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #111827;
   background: #fffdf8;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -17,12 +18,16 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  background: #FAF7EF;
+  color: #111827;
+  color-scheme: light;
 }
 
 a {
@@ -33,3 +38,4 @@ button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
