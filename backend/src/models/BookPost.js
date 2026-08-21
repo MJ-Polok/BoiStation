@@ -157,6 +157,15 @@ const bookPostSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    priceReason: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+    },
+    pricingRuleAccepted: {
+      type: Boolean,
+      default: false,
+    },
     wantedBook: {
       type: wantedBookSchema,
       required() {

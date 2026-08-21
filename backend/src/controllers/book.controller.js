@@ -55,6 +55,10 @@ function validateBookPayload(payload) {
     return "Price is required for sell posts";
   }
 
+  if (payload.type === "sell" && payload.pricingRuleAccepted !== true) {
+    return "Pricing rule confirmation is required for sell posts";
+  }
+
   if (payload.type === "exchange") {
     if (!payload.wantedBook?.title?.trim() || !payload.wantedBook?.author?.trim()) {
       return "Wanted book title and author are required for exchange posts";

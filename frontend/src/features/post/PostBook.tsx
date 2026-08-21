@@ -64,6 +64,8 @@ type ManualBook = {
 type Details = {
     price: string;
     negotiable: boolean;
+    priceReason: string;
+    pricingRuleAccepted: boolean;
     category: string;
     condition: string;
     location: string;
@@ -149,6 +151,8 @@ const emptyManualBook: ManualBook = {
 const emptyDetails: Details = {
     price: '',
     negotiable: false,
+    priceReason: '',
+    pricingRuleAccepted: false,
     category: '',
     condition: '',
     location: '',
@@ -739,22 +743,48 @@ const DetailsStep = ({
 
         <div className="grid gap-5">
             {postType === 'sell' && (
-                <div className="grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
-                    <TextInput
-                        label="Price"
-                        onChange={(value) => setDetails({ ...details, price: value })}
-                        placeholder="Enter price"
-                        type="number"
-                        value={details.price}
-                    />
-                    <label className="flex h-12 items-center gap-3 rounded-full border border-[#D8CDBB] bg-white px-4 text-sm font-extrabold text-[#111827]">
+                <div className="grid gap-5 rounded-2xl border border-[#E8DFD1] bg-[#FAF7EF] p-4 sm:p-5">
+                    <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+                        <TextInput
+                            label="Price"
+                            onChange={(value) => setDetails({ ...details, price: value })}
+                            placeholder="Enter price"
+                            type="number"
+                            value={details.price}
+                        />
+                        <label className="flex h-12 items-center gap-3 rounded-full border border-[#D8CDBB] bg-white px-4 text-sm font-extrabold text-[#111827]">
+                            <input
+                                checked={details.negotiable}
+                                className="h-4 w-4 accent-[#111827]"
+                                onChange={(event) => setDetails({ ...details, negotiable: event.target.checked })}
+                                type="checkbox"
+                            />
+                            Negotiable
+                        </label>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#F2CE73] bg-[#FFF3D6] px-4 py-3 text-sm font-bold leading-6 text-[#7C2D12]">
+                        Second-hand books should be listed at 30% or less of the original/MRP price. Set a fair price based on the book&apos;s condition.
+                    </div>
+
+                    <div className="grid gap-2">
+                        <FieldLabel>Why is this price fair? (optional)</FieldLabel>
+                        <textarea
+                            className="min-h-24 rounded-2xl border border-[#D8CDBB] bg-white px-4 py-3 text-sm font-semibold text-[#111827] outline-none transition placeholder:text-[#8A8173] focus:border-[#111827] focus:ring-4 focus:ring-[#7DE3A5]/35"
+                            onChange={(event) => setDetails({ ...details, priceReason: event.target.value })}
+                            placeholder="Example: Low price because the cover is old, but pages are clean."
+                            value={details.priceReason}
+                        />
+                    </div>
+
+                    <label className="flex items-start gap-3 rounded-2xl border border-[#D8CDBB] bg-white px-4 py-3 text-sm font-extrabold leading-6 text-[#111827]">
                         <input
-                            checked={details.negotiable}
-                            className="h-4 w-4 accent-[#111827]"
-                            onChange={(event) => setDetails({ ...details, negotiable: event.target.checked })}
+                            checked={details.pricingRuleAccepted}
+                            className="mt-1 h-4 w-4 shrink-0 accent-[#111827]"
+                            onChange={(event) => setDetails({ ...details, pricingRuleAccepted: event.target.checked })}
                             type="checkbox"
                         />
-                        Negotiable
+                        <span>I confirm this price follows Boi Station&apos;s second-hand book pricing rule.</span>
                     </label>
                 </div>
             )}
@@ -1030,6 +1060,8 @@ const createPostPayload = ({
     sellerImages: photos.map((photo, index) => createImagePayload(photo, `${selectedBook.title} condition photo ${index + 1}`)),
     price: postType === 'sell' ? Number(details.price) : undefined,
     isNegotiable: postType === 'sell' ? details.negotiable : undefined,
+    priceReason: postType === 'sell' ? details.priceReason.trim() : undefined,
+    pricingRuleAccepted: postType === 'sell' ? details.pricingRuleAccepted : undefined,
     wantedBook:
         postType === 'exchange' && wantedBook
             ? {
@@ -1250,7 +1282,7 @@ const PostBook = () => {
             );
 
             if (postType === 'sell') {
-                return commonValid && Number(details.price) > 0;
+                return commonValid && Number(details.price) > 0 && details.pricingRuleAccepted;
             }
 
             return commonValid;

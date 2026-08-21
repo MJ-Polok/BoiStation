@@ -30,7 +30,7 @@ const getStatusCopy = (order: OrderRecord, mode: 'buying' | 'selling') => {
     if (order.status === 'seller_accepted') return 'Seller accepted';
     if (order.status === 'seller_rejected') return 'Seller rejected';
     if (order.status === 'admin_review') {
-        if (order.type === 'sell') return 'Order placed';
+        if (order.type === 'sell') return 'Admin review';
         return mode === 'selling' ? 'Exchange accepted' : 'Exchange request placed';
     }
     if (order.status === 'pickup_assigned') return 'Pickup assigned';
@@ -50,9 +50,9 @@ const getDeliverySteps = (status: OrderStatus) => {
     const currentIndex = deliveryStepOrder.indexOf(normalizedStatus);
 
     return [
-        { label: 'Order placed', status: 'admin_review' as OrderStatus },
+        { label: 'Admin review', status: 'admin_review' as OrderStatus },
         { label: 'Pickup assigned', status: 'pickup_assigned' as OrderStatus },
-        { label: 'Delivered', status: 'out_for_delivery' as OrderStatus },
+        { label: 'Delivery placed', status: 'out_for_delivery' as OrderStatus },
     ].map((step, index) => ({
         ...step,
         isDone: currentIndex >= index,

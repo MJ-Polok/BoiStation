@@ -36,6 +36,8 @@ export type CreateBookPostPayload = {
     sellerImages: UploadedImage[];
     price?: number;
     isNegotiable?: boolean;
+    priceReason?: string;
+    pricingRuleAccepted?: boolean;
     wantedBook?: {
         title: string;
         author: string;
