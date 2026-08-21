@@ -14,7 +14,7 @@ const PhotoTile = ({
     extraCount?: number;
 }) => (
     <div
-        className="relative aspect-[4/3] min-h-20 overflow-hidden rounded-md border border-[#D6CCBA]"
+        className="relative aspect-[4/3] min-h-20 w-full min-w-0 max-w-full overflow-hidden rounded-md border border-[#D6CCBA]"
         style={{ backgroundColor: color }}
     >
         {imageUrl ? (
@@ -36,7 +36,7 @@ const PhotoTile = ({
     </div>
 );
 
-const SellerAvatar = ({ post }: { post: SellPost }) => (
+const SellerAvatar = ({ post }: { post: SellPost; }) => (
     <span
         className="group/avatar absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full border-2 border-white text-xs font-extrabold text-[#111827] shadow-[0_8px_20px_rgba(17,24,39,0.16)]"
         style={{ backgroundColor: post.sellerColor }}
@@ -49,7 +49,7 @@ const SellerAvatar = ({ post }: { post: SellPost }) => (
     </span>
 );
 
-const PriceFooter = ({ post }: { post: SellPost }) => (
+const PriceFooter = ({ post }: { post: SellPost; }) => (
     <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#D6CCBA] pt-4">
         <div className="flex min-w-0 items-center gap-2">
             <p className="font-sora text-lg font-extrabold text-[#111827]">{post.priceLabel}</p>
@@ -66,9 +66,9 @@ const PriceFooter = ({ post }: { post: SellPost }) => (
     </div>
 );
 
-const OfficialCover = ({ post }: { post: SellPost }) => (
-    <div className="rounded-lg bg-[#F7F4EC] p-4">
-        <div className="aspect-[4/5] overflow-hidden rounded-md border-2 border-[#111827] bg-[#FFFDF8]">
+const OfficialCover = ({ post }: { post: SellPost; }) => (
+    <div className="w-full min-w-0 max-w-full rounded-lg bg-[#F7F4EC] p-4">
+        <div className="aspect-[4/5] w-full min-w-0 max-w-full overflow-hidden rounded-md border-2 border-[#111827] bg-[#FFFDF8]">
             {post.coverUrl ? (
                 <img
                     className="h-full w-full object-cover"
@@ -89,12 +89,12 @@ const OfficialCover = ({ post }: { post: SellPost }) => (
     </div>
 );
 
-const MatchedSellCard = ({ post }: { post: SellPost }) => (
-    <article className="group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-lg border border-[#D6CCBA] bg-white p-4 shadow-[0_8px_24px_rgba(17,24,39,0.04)] transition duration-300 group-hover/card:-translate-y-1 group-hover/card:shadow-[0_16px_38px_rgba(17,24,39,0.12)]">
+const MatchedSellCard = ({ post }: { post: SellPost; }) => (
+    <article className="group relative flex h-full min-h-[360px] w-full min-w-0 max-w-full flex-col overflow-hidden rounded-lg border border-[#D6CCBA] bg-white p-4 shadow-[0_8px_24px_rgba(17,24,39,0.04)] transition duration-300 group-hover/card:-translate-y-1 group-hover/card:shadow-[0_16px_38px_rgba(17,24,39,0.12)]">
         <SellerAvatar post={post} />
-        <div className="grid flex-1 gap-4 sm:grid-cols-[0.82fr_1fr]">
+        <div className="grid min-w-0 flex-1 gap-4 sm:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)]">
             <OfficialCover post={post} />
-            <div className="flex flex-col rounded-lg border border-[#E7DFD0] bg-[#FAF8F2] p-4">
+            <div className="flex min-w-0 flex-col rounded-lg border border-[#E7DFD0] bg-[#FAF8F2] p-4">
                 <div className="pr-12">
                     <span className="rounded-full bg-[#EAF4EE] px-3 py-1 text-xs font-bold text-[#14532D]">
                         For Sale
@@ -105,7 +105,7 @@ const MatchedSellCard = ({ post }: { post: SellPost }) => (
                     <p className="mt-2 text-sm font-semibold text-[#4F5865]">{post.author}</p>
                 </div>
 
-                <div className="mt-5 grid flex-1 grid-cols-2 gap-2.5">
+                <div className="mt-5 grid min-w-0 flex-1 grid-cols-2 gap-2.5">
                     {(post.photoUrls?.length ? post.photoUrls : post.photoColors).slice(0, 4).map((item, index) => (
                         <PhotoTile
                             color={post.photoColors[index] || '#F7F4EC'}
@@ -123,8 +123,8 @@ const MatchedSellCard = ({ post }: { post: SellPost }) => (
     </article>
 );
 
-const FallbackSellCard = ({ post }: { post: SellPost }) => (
-    <article className="group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-lg border border-[#D6CCBA] bg-white shadow-[0_8px_24px_rgba(17,24,39,0.04)] transition duration-300 group-hover/card:-translate-y-1 group-hover/card:shadow-[0_16px_38px_rgba(17,24,39,0.12)]">
+const FallbackSellCard = ({ post }: { post: SellPost; }) => (
+    <article className="group relative flex h-full min-h-[360px] w-full min-w-0 max-w-full flex-col overflow-hidden rounded-lg border border-[#D6CCBA] bg-white shadow-[0_8px_24px_rgba(17,24,39,0.04)] transition duration-300 group-hover/card:-translate-y-1 group-hover/card:shadow-[0_16px_38px_rgba(17,24,39,0.12)]">
         <SellerAvatar post={post} />
         <div className="relative bg-[#F7F4EC] p-4">
             <div className="h-[220px] overflow-hidden rounded-md border-2 border-[#111827] sm:h-[240px] lg:h-[220px]">
@@ -176,7 +176,7 @@ type SellPostCardProps = {
 };
 
 const SellPostCard = ({ isInteractive = true, post }: SellPostCardProps) => {
-    const wrapperClass = 'group/card block h-full';
+    const wrapperClass = 'group/card block h-full w-full min-w-0 max-w-full';
 
     if (post.databaseMatched) {
         const card = <MatchedSellCard post={post} />;

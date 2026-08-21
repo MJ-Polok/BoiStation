@@ -56,7 +56,7 @@ const BuySell = () => {
     };
 
     return (
-        <main className="min-h-screen bg-[#FAF7EF] text-[#111827]">
+        <main className="min-h-screen w-full overflow-x-hidden bg-[#FAF7EF] text-[#111827]">
             <section className="px-4 pb-10 pt-14 sm:px-6 sm:pb-12 sm:pt-16 lg:px-8 lg:pb-14 lg:pt-20">
                 <motion.div
                     className="mx-auto flex max-w-7xl flex-col gap-7 sm:flex-row sm:items-end sm:justify-between"
@@ -96,17 +96,17 @@ const BuySell = () => {
 
             <section className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
                 <motion.div
-                    className="mx-auto max-w-7xl"
+                    className="mx-auto w-full min-w-0 max-w-7xl"
                     variants={sectionVariants}
                     initial="hidden"
                     animate="visible"
                 >
                     {filteredPosts.length > 0 ? (
                         <>
-                            <div className="grid grid-flow-dense gap-6 lg:grid-cols-4">
+                            <div className="grid w-full min-w-0 grid-flow-dense gap-6 lg:grid-cols-4">
                                 {filteredPosts.map((post) => (
                                     <motion.div
-                                        className={post.databaseMatched ? 'lg:col-span-2' : ''}
+                                        className={`min-w-0 ${post.databaseMatched ? 'lg:col-span-2' : ''}`}
                                         variants={cardVariants}
                                         key={post.id}
                                     >
