@@ -10,9 +10,9 @@ const smoothEase = [0.22, 1, 0.36, 1] as const;
 
 const HeroSection = () => {
     return (
-        <section id="top" className="bg-[#8BE8B1] px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+        <section id="top" className="bg-[#8BE8B1] px-4 pb-4 pt-2 sm:px-6 sm:pb-6 sm:pt-3 lg:px-8">
             <motion.div
-                className="mx-auto rounded-[28px] border border-[#E7DFD0] bg-[#FFFDF8] px-5 py-10 shadow-[0_18px_50px_rgba(17,24,39,0.10)] sm:px-8 sm:py-14 lg:min-h-[calc(100vh-48px)] lg:px-16 lg:py-20"
+                className="mx-auto rounded-[28px] border border-[#E7DFD0] bg-[#FFFDF8] px-5 py-10 shadow-[0_18px_50px_rgba(17,24,39,0.10)] sm:px-8 sm:py-14 lg:min-h-[calc(100vh-122px)] lg:px-16 lg:py-14"
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, ease: smoothEase }}
