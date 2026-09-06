@@ -101,16 +101,20 @@ export const getBook = asyncHandler(async (req, res) => {
     throw new Error("Book post not found");
   }
 
-  const book = await BookPost.findById(req.params.id).populate("owner", "name username avatar location bio");
+  const book = await BookPost.findById(req.params.id).select("+pickupInfo").populate("owner", "name username avatar location bio");
 
   if (!book) {
     res.status(404);
     throw new Error("Book post not found");
   }
 
+  const bookData = book.toObject();
+  bookData.sellerPickupDistrict = book.pickupInfo?.district;
+  delete bookData.pickupInfo;
+
   res.json({
     success: true,
-    data: book,
+    data: bookData,
   });
 });
 

@@ -13,6 +13,14 @@ export type ContactInfo = {
     note?: string;
 };
 
+export type OrderPricing = {
+    bookPrice: number;
+    exchangeFee: number;
+    deliveryCharge: number;
+    totalAmount: number;
+    currency: 'BDT';
+};
+
 export type BuyerProposedBook = {
     title: string;
     author: string;
@@ -53,6 +61,7 @@ export type OrderRecord = {
     sellerPickupInfo: ContactInfo;
     buyerDeliveryInfo: ContactInfo;
     buyerProposedBook?: BuyerProposedBook;
+    pricing?: OrderPricing;
     sellerDecision: {
         status: 'pending' | 'accepted' | 'rejected' | 'not_required';
         note?: string;

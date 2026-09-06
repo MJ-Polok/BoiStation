@@ -53,6 +53,37 @@ const contactInfoSchema = new mongoose.Schema(
   { _id: false },
 );
 
+
+const pricingSchema = new mongoose.Schema(
+  {
+    bookPrice: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    exchangeFee: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    deliveryCharge: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    totalAmount: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    currency: {
+      type: String,
+      enum: ["BDT"],
+      default: "BDT",
+    },
+  },
+  { _id: false },
+);
 const imageSchema = new mongoose.Schema(
   {
     url: {
@@ -154,6 +185,7 @@ const orderSchema = new mongoose.Schema(
       type: contactInfoSchema,
       required: true,
     },
+    pricing: pricingSchema,
     buyerProposedBook: proposedBookSchema,
     sellerDecision: {
       status: {

@@ -25,6 +25,8 @@ const canCancel = (status: OrderStatus) => !['delivered', 'cancelled', 'seller_r
 
 const getUserName = (user?: OrderRecord['buyer']) => user?.name || 'Boi Station reader';
 
+const formatCurrency = (amount?: number) => (typeof amount === 'number' ? `৳${amount}` : 'Not available');
+
 const getStatusCopy = (order: OrderRecord, mode: 'buying' | 'selling') => {
     if (order.status === 'requested') return 'Waiting for seller';
     if (order.status === 'seller_accepted') return 'Seller accepted';
@@ -177,6 +179,25 @@ const OrderCard = ({
             )}
 
             <DeliverySteps status={order.status} />
+            {order.pricing ? (
+                <div className="mt-4 rounded-lg border border-[#E8DFD1] bg-[#FFFDF8] p-4">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#8A8175]">Order total</p>
+                    <div className="mt-3 grid gap-2 text-sm font-bold text-[#4F5865] sm:grid-cols-3">
+                        <div>
+                            <span className="block text-xs uppercase tracking-[0.12em] text-[#8A8175]">Book</span>
+                            <span className="mt-1 block text-[#111827]">{formatCurrency(order.pricing.bookPrice)}</span>
+                        </div>
+                        <div>
+                            <span className="block text-xs uppercase tracking-[0.12em] text-[#8A8175]">Delivery</span>
+                            <span className="mt-1 block text-[#111827]">{formatCurrency(order.pricing.deliveryCharge)}</span>
+                        </div>
+                        <div>
+                            <span className="block text-xs uppercase tracking-[0.12em] text-[#8A8175]">Total</span>
+                            <span className="mt-1 block font-sora text-base font-extrabold text-[#0F4F5F]">{formatCurrency(order.pricing.totalAmount)}</span>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
 
             <div className="mt-4 grid gap-3 md:grid-cols-2">
                 <div className="rounded-lg border border-[#E8DFD1] bg-[#FFFDF8] p-4">

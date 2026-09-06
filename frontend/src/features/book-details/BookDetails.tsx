@@ -59,6 +59,7 @@ type BookDetailsPost = {
     priceLabel?: string;
     negotiable?: boolean;
     location: string;
+    sellerPickupDistrict?: string;
     sellerNote?: string;
     seller: {
         id: string;
@@ -81,6 +82,12 @@ const getInitials = (name: string) =>
 
 const formatPrice = (price?: number) => (typeof price === 'number' ? `৳${price}` : undefined);
 
+const formatCurrency = (amount: number) => `৳${amount}`;
+
+const isDhakaDistrict = (district?: string) => district?.trim().toLowerCase() === 'dhaka';
+
+const getDeliveryCharge = (sellerDistrict?: string, buyerDistrict?: string) =>
+    isDhakaDistrict(sellerDistrict) && isDhakaDistrict(buyerDistrict) ? 70 : 130;
 const formatPostedDate = (value: string) => {
     const date = new Date(value);
 
@@ -138,6 +145,7 @@ const mapBackendBookToDetailsPost = (post: BackendBookPost): BookDetailsPost => 
         priceLabel: formatPrice(post.price),
         negotiable: post.isNegotiable,
         location: post.location,
+        sellerPickupDistrict: post.sellerPickupDistrict,
         sellerNote: post.sellerNote,
         seller: {
             id: ownerId,
@@ -407,6 +415,9 @@ const OrderRequestModal = ({ onClose, post }: { onClose: () => void; post: BookD
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const isExchange = post.type === 'exchange';
+    const deliveryCharge = form.district ? getDeliveryCharge(post.sellerPickupDistrict, form.district) : undefined;
+    const bookPrice = isExchange ? 0 : post.price || 0;
+    const totalPrice = typeof deliveryCharge === 'number' ? bookPrice + deliveryCharge : undefined;
 
     const updateField = (field: keyof OrderFormState, value: string | UploadedImage[]) => {
         setForm((current) => ({ ...current, [field]: value }));
@@ -575,6 +586,36 @@ const OrderRequestModal = ({ onClose, post }: { onClose: () => void; post: BookD
                         <textarea className={`${inputClass} min-h-24 resize-none sm:row-span-2`} onChange={(event) => updateField('address', event.target.value)} placeholder="Full delivery address" value={form.address} />
                         <textarea className={`${inputClass} min-h-24 resize-none sm:col-span-2`} onChange={(event) => updateField('note', event.target.value)} placeholder="Delivery note (optional)" value={form.note} />
                     </div>
+                </div>
+
+                <div className="mt-6 rounded-lg border border-[#D6CCBA] bg-[#FFFDF8] p-4 sm:p-5">
+                    <h3 className="font-sora text-lg font-extrabold text-[#111827]">Order summary</h3>
+                    <div className="mt-4 space-y-3 text-sm font-bold text-[#4F5865]">
+                        {isExchange ? (
+                            <div className="flex items-center justify-between gap-4">
+                                <span>Exchange fee</span>
+                                <span className="text-[#111827]">{formatCurrency(0)}</span>
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-between gap-4">
+                                <span>Book price</span>
+                                <span className="text-[#111827]">{formatCurrency(bookPrice)}</span>
+                            </div>
+                        )}
+                        <div className="flex items-center justify-between gap-4">
+                            <span>Delivery charge</span>
+                            <span className="text-[#111827]">{deliveryCharge ? formatCurrency(deliveryCharge) : 'Select district'}</span>
+                        </div>
+                        <div className="border-t border-[#D6CCBA] pt-3">
+                            <div className="flex items-center justify-between gap-4 font-sora text-base font-extrabold text-[#111827]">
+                                <span>Total price</span>
+                                <span className="text-[#0F4F5F]">{typeof totalPrice === 'number' ? formatCurrency(totalPrice) : 'Pending'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="mt-3 text-xs font-semibold leading-5 text-[#626B78]">
+                        Delivery charge may change slightly based on book weight.
+                    </p>
                 </div>
 
                 {error ? <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</p> : null}

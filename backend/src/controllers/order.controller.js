@@ -33,6 +33,25 @@ function validateExchangeRequest(payload) {
   return "";
 }
 
+
+function isDhakaDistrict(district) {
+  return district?.trim().toLowerCase() === "dhaka";
+}
+
+function calculateOrderPricing(bookPost, buyerDeliveryInfo) {
+  const deliveryCharge = isDhakaDistrict(bookPost.pickupInfo?.district) && isDhakaDistrict(buyerDeliveryInfo?.district) ? 70 : 130;
+  const bookPrice = bookPost.type === "sell" ? Number(bookPost.price || 0) : 0;
+  const exchangeFee = 0;
+
+  return {
+    bookPrice,
+    exchangeFee,
+    deliveryCharge,
+    totalAmount: bookPrice + exchangeFee + deliveryCharge,
+    currency: "BDT",
+  };
+}
+
 function getInitialStatus(type) {
   return type === "exchange" ? "requested" : "admin_review";
 }
@@ -90,6 +109,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     buyer: req.user._id,
     sellerPickupInfo: bookPost.pickupInfo,
     buyerDeliveryInfo,
+    pricing: calculateOrderPricing(bookPost, buyerDeliveryInfo),
     buyerProposedBook: bookPost.type === "exchange" ? buyerProposedBook : undefined,
     status,
     statusHistory: [

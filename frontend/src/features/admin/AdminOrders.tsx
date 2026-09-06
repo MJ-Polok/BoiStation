@@ -61,6 +61,8 @@ const buildContactRows = (prefix: string, info: OrderRecord['buyerDeliveryInfo']
 const copyButtonClass =
     'inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#D6CCBA] px-3 py-1.5 text-xs font-extrabold text-[#111827] transition hover:bg-[#F4EFE6]';
 
+const formatCurrency = (amount?: number) => (typeof amount === 'number' ? `৳${amount}` : 'Not available');
+
 const InfoRow = ({
     copied,
     item,
@@ -242,6 +244,9 @@ const OrderAdminCard = ({ onChanged, order }: { onChanged: (order: OrderRecord) 
         { id: `order-${order._id}-author`, label: 'Book author', value: order.bookPost?.author },
         { id: `order-${order._id}-type`, label: 'Order type', value: order.type },
         { id: `order-${order._id}-status`, label: 'Current status', value: statusLabel[order.status] },
+        { id: `order-${order._id}-book-price`, label: 'Book price', value: formatCurrency(order.pricing?.bookPrice) },
+        { id: `order-${order._id}-delivery-charge`, label: 'Delivery charge', value: formatCurrency(order.pricing?.deliveryCharge) },
+        { id: `order-${order._id}-total-price`, label: 'Total price', value: formatCurrency(order.pricing?.totalAmount) },
         { id: `order-${order._id}-seller`, label: 'Seller account', value: order.seller?.name },
         { id: `order-${order._id}-buyer`, label: 'Buyer account', value: order.buyer?.name },
     ];

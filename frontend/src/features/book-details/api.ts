@@ -51,6 +51,7 @@ export type BackendBookPost = {
     sellerNote?: string;
     owner: BackendUser;
     location: string;
+    sellerPickupDistrict?: string;
     createdAt: string;
 };
 
