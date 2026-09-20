@@ -7,7 +7,6 @@ import BrandLogo from '../ui/BrandLogo';
  
 const sectionLinks = [
     { label: 'Home', href: '#top' },
-    { label: 'Why Boi Station', href: '#why' },
     { label: 'Features', href: '#features' },
     { label: 'Recent Books', href: '#recent-books' },
 ];
