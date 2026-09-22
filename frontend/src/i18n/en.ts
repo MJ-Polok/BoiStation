@@ -1,0 +1,72 @@
+export const en = {
+  common: {
+    searchBooks: 'Search books...',
+    postBook: 'Post a Book',
+    login: 'Login',
+    signUp: 'Sign Up',
+    logout: 'Logout',
+    savedBooks: 'Saved Books',
+    messages: 'Messages',
+    profile: 'Profile',
+    orders: 'Orders',
+    adminOrders: 'Admin Orders',
+  },
+  nav: {
+    home: 'Home',
+    features: 'Features',
+    recentBooks: 'Recent Books',
+    buySell: 'Buy & Sell',
+    exchange: 'Exchange',
+    donate: 'Donate',
+  },
+  footer: {
+    description: 'A trusted book-centered platform for students and readers in Bangladesh.',
+    madeFor: 'Made for readers in Bangladesh',
+  },
+  home: {
+    hero: {
+      badge: 'Books for everyone in Bangladesh',
+      title: 'Buy, sell, exchange, or donate books in one place',
+      subtitle: 'Find affordable books, pass on unused ones, and help books reach new readers across Bangladesh.',
+      findBooks: 'Find Books',
+      postBook: 'Post a Book',
+      trustHints: ['Affordable books', 'Exchange & donate', 'Local readers'],
+    },
+    features: {
+      heading: 'What you can do on Boi Station',
+      subtitle: 'Choose the way you want to pass books forward.',
+      postBook: {
+        title: 'Post a Book',
+        description: 'Share a book you want to sell, exchange, or donate in just a few steps.',
+        steps: ['Add book details', 'Upload photos and set terms', 'Publish your post'],
+        button: 'Post a Book',
+      },
+      buySell: {
+        title: 'Buy & Sell',
+        description: 'Browse books from nearby readers and find what you need at a better price.',
+        steps: ['Search by title or category', 'Compare price, condition, and location', 'Contact the seller'],
+        button: 'Browse Books',
+      },
+      exchange: {
+        title: 'Exchange Books',
+        description: 'Trade books with other readers instead of buying new ones.',
+        steps: ['List the book you have', 'Mention what you want in return', 'Match and exchange'],
+        button: 'Explore Exchanges',
+      },
+      donate: {
+        title: 'Donate Books',
+        description: 'Pass your unused books to someone who can read and benefit from them.',
+        steps: ['Add donation details', 'Review interested requests', 'Hand over the book'],
+        button: 'Donate a Book',
+      },
+    },
+    recent: {
+      heading: 'Recent Books',
+      subtitle: 'Freshly posted books from the community.',
+      viewAll: 'View All Books',
+      errorTitle: 'Recent books could not be loaded.',
+      emptyTitle: 'No recent books yet.',
+      emptySubtitle: 'New active posts will appear here automatically.',
+    },
+  },
+} as const;

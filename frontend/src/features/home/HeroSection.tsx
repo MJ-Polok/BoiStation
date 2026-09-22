@@ -1,16 +1,19 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import HeroBookshelfIllustration from './HeroBookshelfIllustration';
 import { cardVariants, sectionVariants } from '../../lib/animations';
 import Button from '../../components/ui/Button';
 
-const trustHints = ['Affordable books', 'Exchange & donate', 'Local readers'];
-
 const smoothEase = [0.22, 1, 0.36, 1] as const;
 
 const HeroSection = () => {
+    const { i18n, t } = useTranslation();
+    const trustHints = t('home.hero.trustHints', { returnObjects: true }) as string[];
+    const languageClass = i18n.language === 'bn' ? 'font-bn-body' : '';
+
     return (
-        <section id="top" className="bg-[#8BE8B1] px-4 pb-4 pt-2 sm:px-6 sm:pb-6 sm:pt-3 lg:px-8">
+        <section id="top" className={`bg-[#8BE8B1] px-4 pb-4 pt-2 sm:px-6 sm:pb-6 sm:pt-3 lg:px-8 ${languageClass}`}>
             <motion.div
                 className="mx-auto rounded-[28px] border border-[#E7DFD0] bg-[#FFFDF8] px-5 py-10 shadow-[0_18px_50px_rgba(17,24,39,0.10)] sm:px-8 sm:py-14 lg:min-h-[calc(100vh-122px)] lg:px-16 lg:py-14"
                 initial={{ opacity: 0, y: 18 }}
@@ -28,21 +31,21 @@ const HeroSection = () => {
                             className="mb-5 inline-flex rounded-full border border-[#D8D2C4] bg-[#F4EFE6] px-4 py-2 text-sm font-semibold text-[#111827]"
                             variants={cardVariants}
                         >
-                            Books for everyone in Bangladesh
+                            {t('home.hero.badge')}
                         </motion.p>
 
                         <motion.h1
-                            className="font-sora max-w-[720px] text-4xl font-extrabold leading-[1.08] text-[#111827] sm:text-5xl lg:text-6xl xl:text-[68px]"
+                            className={`font-sora max-w-[720px] text-4xl font-extrabold leading-[1.08] text-[#111827] sm:text-5xl lg:text-6xl xl:text-[68px] ${i18n.language === 'bn' ? 'font-bn-heading' : ''}`}
                             variants={cardVariants}
                         >
-                            Buy, sell, exchange, or donate books in one place
+                            {t('home.hero.title')}
                         </motion.h1>
 
                         <motion.p
                             className="mt-6 max-w-xl text-base leading-7 text-[#5F6673] sm:text-lg"
                             variants={cardVariants}
                         >
-                            Find affordable books, pass on unused ones, and help books reach new readers across Bangladesh.
+                            {t('home.hero.subtitle')}
                         </motion.p>
 
                         <motion.div
@@ -50,14 +53,14 @@ const HeroSection = () => {
                             variants={cardVariants}
                         >
                             <Button href="/buy-sell" icon={<ArrowRight size={18} strokeWidth={2.4} />}>
-                                Find Books
+                                {t('home.hero.findBooks')}
                             </Button>
                             <Button
                                 href="/post"
                                 icon={<Plus size={18} strokeWidth={2.4} />}
                                 variant="secondary"
                             >
-                                Post a Book
+                                {t('home.hero.postBook')}
                             </Button>
                         </motion.div>
 

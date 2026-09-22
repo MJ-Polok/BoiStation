@@ -1,14 +1,12 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BookMarked, Gift, Repeat2, Upload } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cardVariants, sectionVariants } from '../../lib/animations';
 import Button from '../../components/ui/Button';
 
 const features = [
     {
-        title: 'Post a Book',
-        description: 'Share a book you want to sell, exchange, or donate in just a few steps.',
-        steps: ['Add book details', 'Upload photos and set terms', 'Publish your post'],
-        button: 'Post a Book',
+        translationKey: 'postBook',
         route: '/post',
         icon: Upload,
         accent: '#7DE3A5',
@@ -16,10 +14,7 @@ const features = [
         visualSide: 'right',
     },
     {
-        title: 'Buy & Sell',
-        description: 'Browse books from nearby readers and find what you need at a better price.',
-        steps: ['Search by title or category', 'Compare price, condition, and location', 'Contact the seller'],
-        button: 'Browse Books',
+        translationKey: 'buySell',
         route: '/buy-sell',
         icon: BookMarked,
         accent: '#F4D35E',
@@ -27,10 +22,7 @@ const features = [
         visualSide: 'left',
     },
     {
-        title: 'Exchange Books',
-        description: 'Trade books with other readers instead of buying new ones.',
-        steps: ['List the book you have', 'Mention what you want in return', 'Match and exchange'],
-        button: 'Explore Exchanges',
+        translationKey: 'exchange',
         route: '/exchange',
         icon: Repeat2,
         accent: '#93C5FD',
@@ -38,17 +30,14 @@ const features = [
         visualSide: 'right',
     },
     {
-        title: 'Donate Books',
-        description: 'Pass your unused books to someone who can read and benefit from them.',
-        steps: ['Add donation details', 'Review interested requests', 'Hand over the book'],
-        button: 'Donate a Book',
+        translationKey: 'donate',
         route: '/donate',
         icon: Gift,
         accent: '#A78BFA',
         background: '#F7F4EC',
         visualSide: 'left',
     },
-];
+] as const;
 
 type Feature = (typeof features)[number];
 
@@ -80,6 +69,10 @@ const VisualPlaceholder = ({ feature }: { feature: Feature }) => {
 };
 
 const FeatureContent = ({ feature }: { feature: Feature }) => {
+    const { i18n, t } = useTranslation();
+    const baseKey = `home.features.${feature.translationKey}`;
+    const steps = t(`${baseKey}.steps`, { returnObjects: true }) as string[];
+
     return (
         <div className="max-w-[480px] text-left">
             <div
@@ -88,15 +81,15 @@ const FeatureContent = ({ feature }: { feature: Feature }) => {
             >
                 <feature.icon size={24} strokeWidth={2.3} />
             </div>
-            <h3 className="font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl">
-                {feature.title}
+            <h3 className={`font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl ${i18n.language === 'bn' ? 'font-bn-heading' : ''}`}>
+                {t(`${baseKey}.title`)}
             </h3>
             <p className="mt-4 text-base leading-7 text-[#5F6673] sm:text-lg">
-                {feature.description}
+                {t(`${baseKey}.description`)}
             </p>
 
             <ol className="mt-7 space-y-4">
-                {feature.steps.map((step, index) => (
+                {steps.map((step, index) => (
                     <li className="flex items-center gap-3 text-sm font-semibold text-[#111827] sm:text-base" key={step}>
                         <span
                             className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-xs font-extrabold"
@@ -114,15 +107,18 @@ const FeatureContent = ({ feature }: { feature: Feature }) => {
                 href={feature.route}
                 icon={<ArrowRight size={18} strokeWidth={2.4} />}
             >
-                {feature.button}
+                {t(`${baseKey}.button`)}
             </Button>
         </div>
     );
 };
 
 const FeaturePreviewSections = () => {
+    const { i18n, t } = useTranslation();
+    const languageClass = i18n.language === 'bn' ? 'font-bn-body' : '';
+
     return (
-        <section id="features" className="bg-[#FFFDF8]">
+        <section id="features" className={`bg-[#FFFDF8] ${languageClass}`}>
             <div className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-22">
                 <motion.div
                     className="mx-auto max-w-7xl"
@@ -132,11 +128,11 @@ const FeaturePreviewSections = () => {
                     viewport={{ once: true, amount: 0.25 }}
                 >
                     <motion.div className="max-w-2xl text-left" variants={cardVariants}>
-                        <h2 className="font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl lg:text-5xl">
-                            What you can do on Boi Station
+                        <h2 className={`font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl lg:text-5xl ${i18n.language === 'bn' ? 'font-bn-heading' : ''}`}>
+                            {t('home.features.heading')}
                         </h2>
                         <p className="mt-4 text-base leading-7 text-[#5F6673] sm:text-lg">
-                            Choose the way you want to pass books forward.
+                            {t('home.features.subtitle')}
                         </p>
                     </motion.div>
                 </motion.div>
@@ -149,7 +145,7 @@ const FeaturePreviewSections = () => {
                     <section
                         className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-22"
                         style={{ backgroundColor: feature.background }}
-                        key={feature.title}
+                        key={feature.translationKey}
                     >
                         <motion.div
                             className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16"

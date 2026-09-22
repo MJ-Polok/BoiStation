@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Button from '../../components/ui/Button';
 import CompactBookCard, { type CompactBook } from '../../components/ui/CompactBookCard';
 import { cardVariants, sectionVariants } from '../../lib/animations';
@@ -46,6 +47,8 @@ const mapRecentBook = (post: BackendBookPost): CompactBook => {
 };
 
 const RecentBooksSection = () => {
+    const { i18n, t } = useTranslation();
+    const languageClass = i18n.language === 'bn' ? 'font-bn-body' : '';
     const [books, setBooks] = useState<CompactBook[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
@@ -80,13 +83,13 @@ const RecentBooksSection = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
             >
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <div className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${languageClass}`}>
                     <motion.div className="max-w-2xl text-left" variants={cardVariants}>
-                        <h2 className="font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl lg:text-5xl">
-                            Recent Books
+                        <h2 className={`font-sora text-3xl font-extrabold leading-tight text-[#111827] sm:text-4xl lg:text-5xl ${i18n.language === 'bn' ? 'font-bn-heading' : ''}`}>
+                            {t('home.recent.heading')}
                         </h2>
                         <p className="mt-4 text-base leading-7 text-[#5F6673] sm:text-lg">
-                            Freshly posted books from the community.
+                            {t('home.recent.subtitle')}
                         </p>
                     </motion.div>
 
@@ -96,7 +99,7 @@ const RecentBooksSection = () => {
                             href="/buy-sell"
                             icon={<ArrowRight size={18} strokeWidth={2.4} />}
                         >
-                            View All Books
+                            {t('home.recent.viewAll')}
                         </Button>
                     </motion.div>
                 </div>
@@ -111,8 +114,8 @@ const RecentBooksSection = () => {
                         ))}
                     </div>
                 ) : error ? (
-                    <div className="mt-10 rounded-lg border border-[#E7DFD0] bg-[#FAF7EF] px-5 py-6 text-left">
-                        <p className="font-bold text-[#111827]">Recent books could not be loaded.</p>
+                    <div className={`mt-10 rounded-lg border border-[#E7DFD0] bg-[#FAF7EF] px-5 py-6 text-left ${languageClass}`}>
+                        <p className="font-bold text-[#111827]">{t('home.recent.errorTitle')}</p>
                         <p className="mt-2 text-sm font-semibold text-[#626B78]">{error}</p>
                     </div>
                 ) : books.length ? (
@@ -124,10 +127,10 @@ const RecentBooksSection = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="mt-10 rounded-lg border border-[#E7DFD0] bg-[#FAF7EF] px-5 py-6 text-left">
-                        <p className="font-bold text-[#111827]">No recent books yet.</p>
+                    <div className={`mt-10 rounded-lg border border-[#E7DFD0] bg-[#FAF7EF] px-5 py-6 text-left ${languageClass}`}>
+                        <p className="font-bold text-[#111827]">{t('home.recent.emptyTitle')}</p>
                         <p className="mt-2 text-sm font-semibold text-[#626B78]">
-                            New active posts will appear here automatically.
+                            {t('home.recent.emptySubtitle')}
                         </p>
                     </div>
                 )}
